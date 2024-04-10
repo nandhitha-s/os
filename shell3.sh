@@ -34,6 +34,12 @@ get_file_memory_usage() {
     fi
 }
 
+generate_password() {
+    password_length=$1
+    password=$(openssl rand -base64 $((password_length * 3 / 4)) | head -c $password_length)
+    echo "Generated Password: $password"
+}
+
 while true; do
     echo ""
     echo "1. List Empty Files"
@@ -41,6 +47,7 @@ while true; do
     echo "3. Get Total Memory Usage"
     echo "4. Get Memory Usage of a File"
     echo "5. Exit"
+    echo "6. Generate Password"
     echo ""
 
     read -p "Enter your choice: " choice
@@ -74,6 +81,10 @@ while true; do
         5)
             echo "Exiting..."
             exit 0
+            ;;
+        6)
+            read -p "Enter the length of the password: " password_length
+            generate_password "$password_length"
             ;;
         *)
             echo "Invalid choice. Please enter a valid option."
